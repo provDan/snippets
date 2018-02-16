@@ -1,0 +1,39 @@
+Flow:
+
+1. Create user
+2. Login to OAuth and get the access token
+3. Use access token in the header to update the user
+
+
+-- CREATE USER
+curl -v -k --user admin:admin --data '{"schemas":[],"name":{"familyName":"gunasinghe","givenName":"hasinitg"},"userName":"kartheek","password":"aqq123","emails":[{"primary":true,"value":"hasini_home.com","type":"home"},{"value":"hasini_work.com","type":"work"}]}' --header "Content-Type:application/json" https://localhost:9443/wso2/scim/Users
+
+-- PATCH User's username
+curl -k --user admin:admin -X PATCH -d '{"schemas": ["urn:scim:schemas:core:1.0"], "userName":"evan2"}' --header "Content-Type:application/json" https://localhost:9443/wso2/scim/Users/6dc03104-7fc9-41a1-be9c-f4cc5ea9c386
+
+-- PATCH User's Password w/ basic auth
+curl -k --user admin:admin -X PATCH -d '{"schemas": ["urn:scim:schemas:core:1.0"], "userName":"scott", "password":"abc456"}' --header "Content-Type:application/json" https://localhost:9443/wso2/scim/Users/6dc03104-7fc9-41a1-be9c-f4cc5ea9c386
+
+-- PATCH User's Password w/ oauth using admin's token (fails with stacktrace)
+curl -v -k -H "Authorization: Bearer 1e49fa03-2132-3aa0-9136-45dbe5385f57" -X PATCH -d '{"schemas": ["urn:scim:schemas:core:1.0"], "userName":"john", "password":"qwe123"}' --header "Content-Type:application/json" https://localhost:9443/wso2/scim/Users/6dc03104-7fc9-41a1-be9c-f4cc5ea9c386
+
+
+-- GET OAuth token
+curl --user 06SV5QwH0hTOqtLc2GQEfGGfMfAa:tcigefxOqai98BIHfufAXrqzLf0a -k -d "grant_type=password&username=kartheek&password=aqq123" -H "Content-Type:application/x-www-form-urlencoded" https://localhost:9443/oauth2/token
+
+
+-- GET SELF w OAuth
+curl -v -k -H "Authorization:Bearer 78efe5e7-f0f9-3ea7-8127-6d6abac3e81d" https://localhost:9443/wso2/scim/Users/0292b731-efb8-4af5-ac1c-750a04a52e46
+
+-- UPDATE SELF with token (fails with stacktrace)
+curl -v -k -H "Authorization:Bearer 78efe5e7-f0f9-3ea7-8127-6d6abac3e81d"  -X PUT -d '{"schemas":["urn:scim:schemas:core:1.0"],"name":{"familyName":"smith","givenName":"hasinitg"},"userName":"kartheek","emails":[{"value":"hasini_work.com","type":"work"},{"value":"hasini_home.com","type":"home"}],"meta":{"lastModified":"2018-02-15T17:52:56","created":"2018-02-15T17:52:56","location":"https://localhost:9443/wso2/scim/Users/0292b731-efb8-4af5-ac1c-750a04a52e46"}}' --header "Content-Type:application/json" https://localhost:9443/wso2/scim/Users/0292b731-efb8-4af5-ac1c-750a04a52e46
+
+-- UPDATE SELF with creds
+curl -v -k --user bob:bob123  -X PUT -d '{"schemas":["urn:scim:schemas:core:1.0"],"name":{"familyName":"gunasinghe","givenName":"hasinitg"},"userName":"bob", "password":"bob123","emails":[{"value":"hasini_work.com","type":"work"},{"value":"hasini_home.com","type":"home"}],"meta":{"lastModified":"2018-02-15T02:25:59","created":"2018-02-15T02:25:59","location":"https://localhost:9443/wso2/scim/Users/4d8f8d75-a00b-4c45-a579-2026028c51d9"}}' --header "Content-Type:application/json" https://localhost:9443/wso2/scim/Users/4d8f8d75-a00b-4c45-a579-2026028c51d9
+
+-- GET USER
+curl -k --user admin:admin https://localhost:9443/wso2/scim/Users/4d8f8d75-a00b-4c45-a579-2026028c51d9
+
+
+-- LIST USERS
+curl -k --user admin:admin https://localhost:9443/wso2/scim/Users
