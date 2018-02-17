@@ -5,7 +5,7 @@
 // 1. sign-in
 
 // WEB APP
-function clickSubmmit() {
+function clickSubmmitOnSigninPage() {
   let username = userField.value;
   let password = passwordField.value;
 
@@ -16,7 +16,7 @@ function clickSubmmit() {
       password: password}),
     method: 'POST'
   })
-  .then(saveJwtTokenSomewhere)
+  .then(saveTokenInSessionStore)
   .then(showLoginSuccess)
 }
 
