@@ -51,4 +51,22 @@ function clickSubmitOnLinkAccountPage() {
 }
 
 // ORCH
-function linkMychartAccount
+function linkMychartAccount(myCharCreds) {
+  let epicPatient = await fetch('identity.prov.org/authentication/mychar', {  // identity -> authorize (with Epic)
+    body: JSON.stringify({myChartUsername, myChartPassword, system}),
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  })
+  // TODO: perform some verification here?
+  fhirClient.updatePerson({patient: epicPatient.patientId})
+}
+
+// IDENTITY
+function authorizeWithEpic(username, password, system) {
+  return epicClient.authorize(username, password, system);
+}
+
+// TODO: system needed to know which EPIC to go to. pass from the UI somehow on the link page?
+// TODO: do we need to check the authenticated Epic patient is the same as the account currently logged in?
