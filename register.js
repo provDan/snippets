@@ -8,7 +8,7 @@
 // WEB APP
 function clickSubmitOnCreateAccountPage() {
   let newAccountInfo = {email, password, demographics}
-  fetch('orch.prov.org', {  // orch -> createAccount
+  fetch('orch.prov.org/accounts', {  // orch -> createAccount
     body: JSON.stringify(newAccountInfo),
     method: 'POST'
   })
