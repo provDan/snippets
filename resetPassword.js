@@ -5,7 +5,7 @@
 
 // 1. fill out reset password form
 
-// WEB APP
+// MOBILE APP
 function clickSubmitOnResetPasswordPage() {
   let email = emailField.value
   fetch('orch.prov.org/resetPassword', {  // orch -> sendResetEmail
@@ -33,13 +33,13 @@ function sendResetEmail(email) {
 
 // 3. fill out new password form
 
-// WEB APP
+// MOBILE APP
 function clickSubmitOnNewPasswordPage() {
   let token = getTokenFromUrl()
   let username = usernameField.value
   let newPassword = newPasswordField.value
 
-  fetch('orch.prov.org/changeEmail', {  // orch -> change password
+  fetch('orch.prov.org/changePassword', {  // orch -> change password
     body: JSON.stringify({token, username, newPassword}),
     method: 'POST'
   })
@@ -50,16 +50,16 @@ function changePassword(token, username, newPassword) {
   ////// TWO APPROACHES:
   // 1. orchestrate
 
-  let valid = fetch('identity.prov.org/validateToken', {  // orch -> change password
-    body: JSON.stringify({token, username}),
-    method: 'POST'
-  })
+  // let valid = fetch('identity.prov.org/validateToken', {  // orch -> change password
+  //   body: JSON.stringify({token, username}),
+  //   method: 'POST'
+  // })
 
-  if (valid)
-  fetch(`identity.prov.org/${usernme}/changePassword`, {  // orch -> change password
-    body: JSON.stringify({username, password}),
-    method: 'POST'
-  })
+  // if (valid)
+  // fetch(`identity.prov.org/${usernme}/changePassword`, {  // orch -> change password
+  //   body: JSON.stringify({username, password}),
+  //   method: 'POST'
+  // })
 
   // 2. delegate
   fetch(`identity.prov.org/${usernme}/changePasswordWithToken`, {  // orch -> change password

@@ -4,7 +4,7 @@
 
 // 1. sign-in
 
-// WEB APP
+// MOBILE APP
 function clickSubmmitOnSigninPage() {
   let username = userField.value;
   let password = passwordField.value;
@@ -20,7 +20,7 @@ function clickSubmmitOnSigninPage() {
   .then(showLoginSuccess)
 }
 
-// ORCH
+// ORCH (just proxy here)
 function signin(username, password, domain) {
   return fetch('identity.prov.org/signin', {  // identity -> signin
     body: JSON.stringify({username, domain, password}),
@@ -30,12 +30,12 @@ function signin(username, password, domain) {
 
 // IDENTITY
 function signin(username, domain, password) {
-  return oauthClien.token(password)
+  return oauthClient.token(password)
 }
 
 // 2. see patient record
 
-// WEB APP
+// MOBILE APP
 function loadHomePage(username, accessToken) {
   return fetch(`orch.prov.org/readPatient/${username}`, { // orch -> readPatient
     headers: `Authorization: Bearer ${accessToken}`
