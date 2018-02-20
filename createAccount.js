@@ -5,11 +5,11 @@
 
 // 1. create account
 
-// WEB APP
+// MOBILE APP
 function clickSubmitOnCreateAccountPage() {
   let newAccountInfo = {email, password, demographics}
   fetch('orch.prov.org/accounts', {  // orch -> createAccount
-    body: JSON.stringify(newAccountInfo),
+    body: JSON.stringify({newAccountInfo, domain: 'PATIENT'}),
     method: 'POST'
   })
 }
@@ -18,7 +18,7 @@ function clickSubmitOnCreateAccountPage() {
 function createAccount() {
   let person = await fhirClient.createPerson();
   return fetch('identity.prov.org', {  // identity -> createAccount
-    body: JSON.stringify({newAccountInfo, person}),
+    body: JSON.stringify({newAccountInfo, person, domain}),
     method: 'POST'
   })
 }
@@ -33,13 +33,13 @@ function create(newAccountInfo, person) {
 
 // 3. link with existing my chart account
 
-// WEB APP
+// MOBILE APP
 function clickSubmitOnLinkAccountPage() {
   let myChartUsername = userField.value;
   let myChartPassword = passwordField.value;
   
   let accessToken = sessionStorage.accessToken
-  let userId = sessionStorage.userId
+  let userId = sessionStorage.userId // identity ID
 
   fetch('orch.prov.org/linkMyChart', {  // orch -> linkMychartAccount
     body: JSON.stringify({myChartUsername, myChartPassword}),
@@ -51,7 +51,7 @@ function clickSubmitOnLinkAccountPage() {
 }
 
 // ORCH
-function linkMychartAccount(myCharCreds) {
+function linkMychartAccount(myCharCreds, jwt) {
   let epicPatient = await fetch('identity.prov.org/authentication/mychar', {  // identity -> authorize (with Epic)
     body: JSON.stringify({myChartUsername, myChartPassword, system}),
     method: 'POST',
@@ -59,13 +59,13 @@ function linkMychartAccount(myCharCreds) {
       Authorization: `Bearer ${accessToken}`
     }
   })
-  // TODO: perform some verification here?
-  fhirClient.updatePerson({patient: epicPatient.patientId})
+  // TODO: perform some verification here? -- a Billy question
+  fhirClient.updatePerson({personId: jwt.personId, patient: epicPatient.patientId})
 }
 
 // IDENTITY
-function authorizeWithEpic(username, password, system) {
-  return epicClient.authorize(username, password, system);
+function authorizeWithEpic(username, password, epicSystem) {
+  return epicClient.authorize(username, password, epicSystem);
 }
 
 // TODO: system needed to know which EPIC to go to. pass from the UI somehow on the link page?

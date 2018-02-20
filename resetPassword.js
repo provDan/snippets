@@ -47,28 +47,13 @@ function clickSubmitOnNewPasswordPage() {
 
 // ORCH
 function changePassword(token, username, newPassword) {
-  ////// TWO APPROACHES:
-  // 1. orchestrate
-
-  // let valid = fetch('identity.prov.org/validateToken', {  // orch -> change password
-  //   body: JSON.stringify({token, username}),
-  //   method: 'POST'
-  // })
-
-  // if (valid)
-  // fetch(`identity.prov.org/${usernme}/changePassword`, {  // orch -> change password
-  //   body: JSON.stringify({username, password}),
-  //   method: 'POST'
-  // })
-
-  // 2. delegate
   fetch(`identity.prov.org/${usernme}/changePasswordWithToken`, {  // orch -> change password
     body: JSON.stringify({username, password, token}),
     method: 'POST'
   })
 }
 
-// IDENTITY (approach 2.)
+// IDENTITY
 function changePasswordWithToke(username, password, token) {
   let valid = validateToken(username, token) //checks value and TTL
   if (valid) scimClient.changePassword(username, password) // uses admin credentials

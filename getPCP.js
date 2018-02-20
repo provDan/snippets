@@ -30,7 +30,7 @@ function signin(username, password, domain) {
 
 // IDENTITY
 function signin(username, domain, password) {
-  return oauthClient.token(password)
+  return oauthClient.token(password) // return JWT (personId, username, email) access_token
 }
 
 // 2. see patient record
@@ -61,6 +61,8 @@ function readPatient(username, accessToken) {
 function readAccount(username, accessToken) {
   return scimClient.readUser(username, accessToken)
 }
+
+// TODO: verfiy read with token works by username
 
 // Acceptance Criteria:
 // A stand-alone, working, code sample for exhibiting this capability
