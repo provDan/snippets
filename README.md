@@ -33,10 +33,10 @@ Respose:
   Body: access_token, refresh_token, jwt
 ```
 
-### /ResetToken
+### /PasswordReset/token
 
 ```
-POST /ResetToken
+POST /PasswordReset/token
 Request:
   Body: username, TTL
 Response
@@ -44,10 +44,10 @@ Response
   Status: 201
 ```
 
-### /PasswordChange
+### /PasswordReset/change
 
 ```
-POST /PasswordChange
+POST /PasswordReset/change
 Request:
   Body: username, newPassword, resetToken
 Response:
