@@ -11,26 +11,46 @@ This repo documents 3 flows: (1) create and link account, (2) sing in and view P
 
 ```
 POST /ResetPasswordEmail
-Body username
+Request:
+  Body: username
 ```
 
 ```
 POST /PasswordChange
-Body username, newPassword, resetToken
+Request:
+  Body: username, newPassword, resetToken
 ```
 
 ## Identity
 
+### /Identity
+
+```
+POST /signin
+Request:
+  Body: username, password, domain, scope
+Respose:
+  Body: access_token, refresh_token, jwt
+```
+
 ### /ResetToken
 
 ```
-POST /Token
-Body username, TTL
+POST /ResetToken
+Request:
+  Body: username, TTL
+Response
+  Body: token
+  Status: 201
 ```
 
 ### /PasswordChange
 
 ```
 POST /PasswordChange
-Body username, newPassword, resetToken
+Request:
+  Body: username, newPassword, resetToken
+Response:
+  Body: null
+  Status: 200
 ```
