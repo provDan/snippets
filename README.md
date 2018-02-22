@@ -33,7 +33,7 @@ Respose:
   Body: access_token, refresh_token, jwt
 ```
 
-### /PasswordReset/token
+### /PasswordReset
 
 ```
 POST /PasswordReset/token
@@ -43,8 +43,6 @@ Response
   Body: token
   Status: 201
 ```
-
-### /PasswordReset/change
 
 ```
 POST /PasswordReset/change
