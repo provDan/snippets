@@ -7,26 +7,26 @@ This repo documents 3 flows: (1) create and link account, (2) sing in and view P
 
 ## Orch
 
-### /SendResetPasswordEmail
+### /identity
 
 ```
-POST /ResetPasswordEmail
+POST /identity/SendResetPasswordEmail
 Request:
   Body: username
 ```
 
 ```
-POST /PasswordChange
+POST /identity/PasswordChange
 Request:
   Body: username, newPassword, resetToken
 ```
 
 ## Identity
 
-### /Identity
+### /Users
 
 ```
-POST /signin
+POST /Users/signin
 Request:
   Body: username, password, domain, scope
 Respose:
