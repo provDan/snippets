@@ -13,12 +13,16 @@ This repo documents 3 flows: (1) create and link account, (2) sing in and view P
 POST /identity/SendResetPasswordEmail
 Request:
   Body: username
+Response:
+  Status: 200
 ```
 
 ```
 POST /identity/PasswordChange
 Request:
   Body: username, newPassword, resetToken
+Response:
+  Status: 200
 ```
 
 ## Identity
